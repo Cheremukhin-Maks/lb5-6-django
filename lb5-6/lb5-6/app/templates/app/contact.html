@@ -1,0 +1,39 @@
+{% extends "app/base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<h1>Форма зворотного зв’язку</h1>
+
+<form method="post" action="{% url 'contact' %}" novalidate>
+    {% csrf_token %}
+
+    <!-- Загальні помилки форми (non_field_errors) -->
+    {% if form.non_field_errors %}
+    <div style="color: red;">
+        {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Ручний рендеринг через ітерацію по полях -->
+    {% for field in form %}
+    <div style="margin-bottom: 15px;">
+        <label for="{{ field.id_for_label }}"><strong>{{ field.label }}:</strong></label><br>
+        {{ field }}
+
+        <!-- Помилки конкретного поля -->
+        {% if field.errors %}
+        <div style="color: red;">
+            {% for error in field.errors %}
+            <small>{{ error }}</small><br>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit">Надіслати</button>
+</form>
+{% endblock %}

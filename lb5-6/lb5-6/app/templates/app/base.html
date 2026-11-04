@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Навчальний веб-сайт{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Головна</a></li>
+                <li><a href="{% url 'posts_list' %}">Список статей</a></li>
+                <li><a href="{% url 'contact' %}">Зворотний зв'язок</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Виведення Flash-повідомлень від messages -->
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+            <p style="color: green; font-weight: bold;">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>&copy; {% now "Y" %} Навчальний проєкт Django.</p>
+    </footer>
+</body>
+</html>
